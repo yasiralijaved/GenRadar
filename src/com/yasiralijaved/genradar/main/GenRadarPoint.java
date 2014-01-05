@@ -7,7 +7,7 @@ package com.yasiralijaved.genradar.main;
 
 import android.location.Location;
 
-public class RadarPoint {
+public class GenRadarPoint {
 
 	private String locationName; 
 	private double lat;
@@ -27,7 +27,7 @@ public class RadarPoint {
 				+ raduis + ", color=" + color + ", distance=" + distance + "]";
 	}
 
-	public RadarPoint(String locationName, double lat, double lng, float x, float y, float raduis,
+	public GenRadarPoint(String locationName, double lat, double lng, float x, float y, float raduis,
 			int color) {
 		super();
 		this.locationName = locationName;

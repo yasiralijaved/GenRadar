@@ -13,13 +13,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.View;
 
-public class RadarSprite extends View {
+public class GenRadarSprite extends View {
 	private Paint mPaint;
-    private List<RadarPoint> mRadarPoints;
+    private List<GenRadarPoint> mRadarPoints;
     
-    public RadarSprite(Context context, List<RadarPoint> radarPoints) {
+    public GenRadarSprite(Context context, List<GenRadarPoint> genRadarPoints) {
         super(context);
-        this.mRadarPoints = new ArrayList<RadarPoint>(radarPoints);
+        this.mRadarPoints = new ArrayList<GenRadarPoint>(genRadarPoints);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
     }
@@ -33,8 +33,8 @@ public class RadarSprite extends View {
         }        
     }
     
-    public void updateUIWithNewRadarPoints(List<RadarPoint> radarPoints){
-    	this.mRadarPoints = new ArrayList<RadarPoint>(radarPoints);
+    public void updateUIWithNewRadarPoints(List<GenRadarPoint> genRadarPoints){
+    	this.mRadarPoints = new ArrayList<GenRadarPoint>(genRadarPoints);
     	this.invalidate();
     }
 }

@@ -23,15 +23,15 @@ import android.widget.LinearLayout.LayoutParams;
  * @author Yasir.Ali <ali.yasir0@gmail.com>
  *
  */
-public class RadarManager implements SensorEventListener {
+public class GenRadarManager implements SensorEventListener {
 
 	private SensorManager mSensorManager;
 	private Sensor mAccelerometer;
 	private Sensor mMagnetometer;
 	private Context mContext;
 
-	private RadarPoint mCenterRadarPoint;
-	private List<RadarPoint> mRadarPoints;
+	private GenRadarPoint mCenterRadarPoint;
+	private List<GenRadarPoint> mRadarPoints;
 
 	private float[] mCompassVals;
 	private float[] mAccelVals;
@@ -55,11 +55,11 @@ public class RadarManager implements SensorEventListener {
 	// record the compass picture angle turned
 	private float currentDegree = 0f;
 
-	private RadarSprite mRadarSprite;
+	private GenRadarSprite mRadarSprite;
 	private LinearLayout mRadarContainer;
 
 	@SuppressWarnings("static-access")
-	public RadarManager(Context context, LinearLayout radarContainer){
+	public GenRadarManager(Context context, LinearLayout radarContainer){
 		mContext = context;
 		mSensorManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
 		mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -71,17 +71,17 @@ public class RadarManager implements SensorEventListener {
 
 	}
 
-	public void setCenterRadarPoint(RadarPoint center){
+	public void setCenterRadarPoint(GenRadarPoint center){
 		mCenterRadarPoint = center;
 	}
 
 	public void initRadarlayout() {
 
-		mRadarPoints = new ArrayList<RadarPoint>();
+		mRadarPoints = new ArrayList<GenRadarPoint>();
 
 		//mRadarPoints.add(new MyRadarPoint("Center Point", 33.683232, 72.988972, 0, 0, Radar.POINT_RADIUS, Color.RED));
 
-		mRadarSprite = new RadarSprite(mContext, mRadarPoints);
+		mRadarSprite = new GenRadarSprite(mContext, mRadarPoints);
 		LayoutParams params = new LayoutParams(MAP_WIDTH, MAP_HEIGHT);
 		mRadarSprite.setLayoutParams(params);
 
@@ -95,10 +95,10 @@ public class RadarManager implements SensorEventListener {
 		mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_FASTEST);
 	}
 
-	public void updateRadarWithPoints(List<RadarPoint> radarPoints){
+	public void updateRadarWithPoints(List<GenRadarPoint> genRadarPoints){
 
 		mRadarPoints = null;
-		mRadarPoints = new ArrayList<RadarPoint>(radarPoints);
+		mRadarPoints = new ArrayList<GenRadarPoint>(genRadarPoints);
 
 		mRadarPoints.add(0, mCenterRadarPoint);
 
@@ -108,7 +108,7 @@ public class RadarManager implements SensorEventListener {
 
 		//mRadarPoints = null;
 		
-		mRadarPoints = new ArrayList<RadarPoint>( applyCenterTransformation() );
+		mRadarPoints = new ArrayList<GenRadarPoint>( applyCenterTransformation() );
 
 		mRadarSprite.updateUIWithNewRadarPoints(mRadarPoints);
 	}
@@ -200,7 +200,7 @@ public class RadarManager implements SensorEventListener {
 		}
 	}
 
-	private List<RadarPoint> applyCenterTransformation() {
+	private List<GenRadarPoint> applyCenterTransformation() {
 		int paddingBothSides = MINIMUM_IMAGE_PADDING_IN_PX * 2;
 
 		// the actual drawing space for the map on the image
@@ -257,7 +257,7 @@ public class RadarManager implements SensorEventListener {
 		}
 
 
-		List<RadarPoint> finalPointsToDraw = new ArrayList<RadarPoint>();
+		List<GenRadarPoint> finalPointsToDraw = new ArrayList<GenRadarPoint>();
 		// Remove the locations which are now out of map
 
 		for(int i = 0; i < mRadarPoints.size(); i++){
@@ -273,11 +273,11 @@ public class RadarManager implements SensorEventListener {
 		return finalPointsToDraw;
 	}
 	
-	public void initAndUpdateRadarWithPoints(RadarPoint center, List<RadarPoint> radarPoints){
+	public void initAndUpdateRadarWithPoints(GenRadarPoint center, List<GenRadarPoint> genRadarPoints){
 		this.setCenterRadarPoint(center);		
 		this.initRadarlayout();
 		this.registerListeners();		
-		this.updateRadarWithPoints(radarPoints);
+		this.updateRadarWithPoints(genRadarPoints);
 	}
 
 

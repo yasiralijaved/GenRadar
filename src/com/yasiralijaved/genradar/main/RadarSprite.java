@@ -1,4 +1,4 @@
-package com.yasiralijaved.radarme.main;
+package com.yasiralijaved.genradar.main;
 
 /**
  * @author Yasir.Ali <ali.yasir0@gmail.com>

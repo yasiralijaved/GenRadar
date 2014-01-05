@@ -1,4 +1,4 @@
-package com.yasiralijaved.radarme.utils;
+package com.yasiralijaved.genradar.utils;
 /**
  * 
  */

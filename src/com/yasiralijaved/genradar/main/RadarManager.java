@@ -1,11 +1,11 @@
-package com.yasiralijaved.radarme.main;
+package com.yasiralijaved.genradar.main;
 
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yasiralijaved.radarme.utils.LowPassFilter;
+import com.yasiralijaved.genradar.utils.LowPassFilter;
 
 import android.content.Context;
 import android.hardware.Sensor;

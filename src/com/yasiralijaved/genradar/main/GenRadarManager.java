@@ -66,8 +66,10 @@ public class GenRadarManager implements SensorEventListener {
 		mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		mRadarContainer = radarContainer;
 
-		MAP_HEIGHT = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 120, context.getResources().getDisplayMetrics());
-		MAP_WIDTH = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 120, context.getResources().getDisplayMetrics());
+		MAP_HEIGHT = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 120, context.getResources().
+getDisplayMetrics());
+		MAP_WIDTH = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 120, context.getResources().
+getDisplayMetrics());
 
 	}
 
@@ -121,43 +123,45 @@ public class GenRadarManager implements SensorEventListener {
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 
-		// thank you http://www.codingforandroid.com/2011/01/using-orientation-sensors-simple.html
-		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
-			mAccelVals = LowPassFilter.filter( event.values.clone(), mAccelVals );
+		if(mRadarContainer != null){
+			// thank you http://www.codingforandroid.com/2011/01/using-orientation-sensors-simple.html
+			if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+				mAccelVals = LowPassFilter.filter( event.values.clone(), mAccelVals );
 
-		if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
-			mCompassVals = LowPassFilter.filter( event.values.clone(), mCompassVals );
+			if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+				mCompassVals = LowPassFilter.filter( event.values.clone(), mCompassVals );
 
-		if (mAccelVals != null && mCompassVals != null) {
-			float R[] = new float[9];
-			float I[] = new float[9];
-			boolean success = SensorManager.getRotationMatrix(R, I, mAccelVals, mCompassVals);
+			if (mAccelVals != null && mCompassVals != null) {
+				float R[] = new float[9];
+				float I[] = new float[9];
+				boolean success = SensorManager.getRotationMatrix(R, I, mAccelVals, mCompassVals);
 
-			if (success) {
-				float orientation[] = new float[3];
-				SensorManager.getOrientation(R, orientation);
+				if (success) {
+					float orientation[] = new float[3];
+					SensorManager.getOrientation(R, orientation);
 
-				float degree = (float) Math.toDegrees( orientation[0]);
+					float degree = (float) Math.toDegrees( orientation[0]);
 
-				// create a rotation animation (reverse turn degree degrees)
-				RotateAnimation ra = new RotateAnimation(
-						currentDegree, 
-						-degree,
-						Animation.RELATIVE_TO_SELF, 0.5f, 
-						Animation.RELATIVE_TO_SELF, 0.5f);
+					// create a rotation animation (reverse turn degree degrees)
+					RotateAnimation ra = new RotateAnimation(
+							currentDegree, 
+							-degree,
+							Animation.RELATIVE_TO_SELF, 0.5f, 
+							Animation.RELATIVE_TO_SELF, 0.5f);
 
-				// how long the animation will take place
-				ra.setDuration(210);
+					// how long the animation will take place
+					ra.setDuration(210);
 
-				// set the animation after the end of the reservation status
-				ra.setFillAfter(true);
+					// set the animation after the end of the reservation status
+					ra.setFillAfter(true);
 
-				// Start the animation
-				mRadarContainer.startAnimation(ra);
-				currentDegree = -degree;
+					// Start the animation
+					mRadarContainer.startAnimation(ra);
+					currentDegree = -degree;
 
+				}
 			}
-		}		
+		}
 	}
 
 	private void applyMercatorProjection() {

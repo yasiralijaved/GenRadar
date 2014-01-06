@@ -1,4 +1,4 @@
-RadarMe
+GenRadar
 =======
 
 A Radar API for Android

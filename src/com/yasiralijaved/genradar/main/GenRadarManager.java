@@ -103,17 +103,12 @@ public class GenRadarManager implements SensorEventListener {
 
 	public synchronized void updateRadarWithPoints(List<GenRadarPoint> genRadarPoints){
 		Log.d(TAG, "Updating Radar With New Points");
-		mRadarPoints.clear();
-		mRadarPoints.addAll(genRadarPoints);
-
+		resetTransformationValues();
+		mRadarPoints =  new ArrayList<GenRadarPoint>(genRadarPoints);
 		mRadarPoints.add(0, mCenterRadarPoint);
-
 		applyMercatorProjection();
-
 		adjustForNegativeValues();
-
 		List<GenRadarPoint> finalPointsToDraw = applyCenterTransformation();
-
 		mRadarSprite.updateUIWithNewRadarPoints(finalPointsToDraw);
 	}
 
@@ -276,6 +271,13 @@ public class GenRadarManager implements SensorEventListener {
 		Log.d(TAG, "Unregistering the event listeners");
 		// to stop the listener and save battery
 		mSensorManager.unregisterListener(this);
+	}
+	
+	private void resetTransformationValues(){
+		minXY = new double[]{-1,-1};
+		maxXY = new double[] {-1,-1};		
+		X_TRANSFORMATION = 0;
+		Y_TRANSFORMATION = 0;
 	}
 
 }

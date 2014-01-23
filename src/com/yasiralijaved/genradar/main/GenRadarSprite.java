@@ -17,6 +17,11 @@ public class GenRadarSprite extends View {
 	private Paint mPaint;
     private List<GenRadarPoint> mRadarPoints;
     
+    // Lint requires a Default Construct for Views, So, make it private because its useless
+    private GenRadarSprite(Context context){
+    	super(context);
+    }
+    
     public GenRadarSprite(Context context, List<GenRadarPoint> genRadarPoints) {
         super(context);
         this.mRadarPoints = new ArrayList<GenRadarPoint>(genRadarPoints);
